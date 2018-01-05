@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+
+	<body>
+		<div id="app1">
+			<!--父级-->
+			<div id="app">
+				<!--自己-->
+				<button v-on:click="send">发送</button>
+				<div id="app3">
+					<!--子级-->
+				</div>
+			</div>
+			<div id="app2">
+				<!--同级-->
+			</div>
+		</div>
+		<div id="app4">
+			<!--测试-->
+			<button v-on:click="test">测试</button>
+		</div>
+	</body>
+	<script>
+		var app = new Vue({
+			el: '#app',
+			data: {
+				int: 89
+			},
+			methods: {
+				send() {
+					console.log(this.int)
+					this.$emit('to-parent', this.val);
+				}
+			}
+		})
+		var app1 = new Vue({
+			el: '#app1',
+			mounted: function() {
+				var _this = this
+				this.$on('to-parent', function(data) {
+					console.log("父极接收数据" + _this.data)
+				})
+			}
+		})
+		var app4 = new Vue({
+			el: '#app4',
+			data: {
+				val: '数据'
+			},
+			methods: {
+				test: function(val) {
+					console.log('测试' + this.val);
+				}
+			}
+		})
+	</script>
+
+</html>

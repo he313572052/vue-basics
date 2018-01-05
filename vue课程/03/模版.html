@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>template</title>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="ele">
+			<tem></tem>
+		</div>
+	</body>
+	<script type="x-template" id="tem">
+		<h2 @click="change">标题2->{{msg}}</h2>
+		<ul>
+			<li>1111</li>
+			<li>222</li>
+			<li>3333</li>
+			<li>1111</li>
+		</ul>
+	</script>
+	<script type="text/javascript">
+		var vue = new Vue({
+			el: '#ele',
+			components: {
+				tem: {
+					template: '#tem',
+					data(){
+						return {
+							msg: '这是模版'
+						}
+					}
+				}
+			}
+		})
+	</script>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>样式的绑定</title>
+	</head>
+	<style type="text/css">
+		.{
+			
+		}
+	</style>
+
+	<body>
+		<div id="box">
+			<!--直接传入一个样式的对象-->
+			<div :style="{width:'100px',height:'100px',background:'green'}">
+
+			</div>
+			<!--直接绑定一个对象,并且可以和本身的style属性一起使用-->
+			<!--可以用数组的语法绑定多个-->
+			<div style="background: orangered;" :style="[size,{opacity:0.5,border:'3px solid #000',boxSizing:'border-box'}]">
+				
+			</div>
+			<div style="background: orangered;" :style="[size,shadow]">
+				
+			</div>
+			<p :style="{color:'red'}">{{context}}</p>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/vue.js"></script>
+	<script type="text/javascript">
+		var vue = new Vue({
+			el: '#box',
+			data: {
+				context: '绑定样式数据',
+				size: {
+					width: '100px',
+					height: '100px'
+				},
+				shadow:{
+					boxShadow:'2px 2px 2px #000'
+				}
+			}
+		});
+	</script>
+
+</html>

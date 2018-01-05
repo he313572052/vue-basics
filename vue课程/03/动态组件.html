@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>动态组件</title>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style type="text/css">
+		.th1 {
+			color: #008000;
+			background: #00F7DE;
+		}
+		
+		.th2 {
+			color: #FF5722;
+			background: #C0A16B;
+		}
+	</style>
+
+	<body>
+		<div id="ele">
+			<button @click="com='component1'">组件1</button>
+			<button @click="com='component2'">组件2</button>
+			<component :is="com"></component>
+		</div>
+	</body>
+	<script type="text/javascript">
+		'use strict'
+		var vue = new Vue({
+			el: '#ele',
+			data: {
+				com: ''
+			},
+			components: {
+				component1: {
+					template: '<h3 class="th1">组件1</h3>'
+				},
+				component2: {
+					template: '<h3 class="th2">组件2</h3>'
+				}
+			}
+		});
+	</script>
+
+</html>

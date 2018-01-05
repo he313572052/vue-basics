@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>solt</title>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id='box'>
+			<componentb>你好世界</componentb>
+			<hr />
+		</div>
+		<template id='panel'>
+			<h1>xxxx</h1>
+			<slot></slot>
+			<solt></solt>
+			<p>hello,world</p>
+		</template>
+	</body>
+	<script type="text/javascript">
+		var vue = new Vue({
+			el: '#box',
+			data: {
+				a: 'aaa'
+			},
+			components: {
+				componenta: {
+					template: '<div><h1>this is one-component</h1> <hr/><span>yes</span</div>'
+				},
+				componentb: {
+					template: '#panel'
+				}
+			}
+		})
+	</script>
+
+</html>

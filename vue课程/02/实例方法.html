@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="ele">
+			{{msg | uppercase}}
+		</div>
+		<div id="box">
+			{{msg}}
+		</div>
+		<script type="text/javascript">
+			var vue = new Vue({
+				el: '#ele',
+				data: {
+					msg: 'hello,vue'
+				}
+			});
+			vue.$el.style.fontSize = '30px';
+			console.log(vue.$data.msg);
+
+			var vm = new Vue({
+				//	自定义属性
+				myAttr: 'this is my attribute ',
+				show: function() {
+					alert('自定义方法');
+				},
+				data: {
+					msg: 'welcome to use Vue'
+				}
+			})
+			//手动挂载
+			vm.$mount('#box')
+			//查看数据的状态
+			console.log(vm.$log());
+			console.log('自定义属性：' + vm.$options.myAttr);
+			vm.$options.show();
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>vueJS课程</title>
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<style type="text/css">
+		.public{
+			font-weight: bolder;
+			font-size: 24px;
+		}
+		.red {
+			color: red;
+		}
+		
+		.bg {
+			background: #5BC0DE;
+		}
+		
+		.green {
+			color: green;
+		}
+	</style>
+
+	<body>
+		<div id="box">
+			<!--绑定类名-->
+			<!--可以和普通的class属性共存-->
+			<p class="public" :class="[clazz1]">{{context}}</p>
+			<!--绑定类名数组-->
+			<p class="public" :class="[clazz1,clazz2]">{{context}}</p>
+			<!--传给 v-bind:class 一个对象-->
+			<p class="public" :class="{red:true,bg:true}">{{context}}</p>
+			<!--绑定json对象-->
+			<p class="public" :class="json">{{context}}</p>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var vue = new Vue({
+			el: '#box',
+			data: {
+				clazz1: 'red',
+				clazz2: 'bg',
+				red: true,
+				green: true,
+				context: '我是绑定的数据',
+				json:{
+					red:true,
+					bg:true
+				}
+			}
+		})
+	</script>
+
+</html>

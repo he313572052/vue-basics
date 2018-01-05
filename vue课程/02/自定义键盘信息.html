@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>自定义键盘信息</title>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id='ele'>
+			<input type="text" name="" id="" value="" @keydown.c="show($event)" />
+			<input type="text" name="" id="" value="" @keydown.ctrl="show1($event)" />
+			<input type="text" name="" id="" value="" @keydown.myenter="show2($event) | debounce 2000" />
+		</div>
+	</body>
+	<script type="text/javascript">
+		window.onload = function() {
+			var vue = new Vue({
+				el: '#ele',
+				data: {
+					a: 'blue'
+				},
+				methods: {
+					show: function(e) {
+						alert('按下c键' + e.keyCode);
+					},
+					show1: function(e) {
+						alert('按下ctrl键' + e.keyCode);
+					},
+					show2: function(e) {
+						alert('按下myenter键' + e.keyCode);
+					}
+				}
+			});
+		}
+		Vue.directive('on').keyCodes.ctrl = 17;
+		Vue.directive('on').keyCodes.myenter = 13;
+	</script>
+
+</html>

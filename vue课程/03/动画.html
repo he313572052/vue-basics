@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>animate</title>
+		<link rel="stylesheet" type="text/css" href="../../css/animate.css" />
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style type="text/css">
+		.box,.box1 {
+			width: 100px;
+			height: 100px;
+			background: red;
+		}
+		.box1{
+			background: #286090;
+		}
+		.fade-transition {
+			transition: 1s all ease;
+		}
+		
+		.fade-enter {
+			opacity: 0;
+		}
+		
+		.fade-leave {
+			opacity: 0;
+			transform: translateX(200px);
+		}
+	</style>
+
+	<body>
+		<div id="ele">
+			<button @click="showAndHidden()">{{val}}</button>
+			<div class="box" transition="fade" v-show="flag">
+
+			</div>
+			<!--自定义动画-->
+			<div class="box1 animated" transition="bounce" v-show="flag">
+
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var vue = new Vue({
+			data: {
+				flag: true,
+				val: '显示'
+			},
+			methods: {
+				showAndHidden: function() {
+					this.flag = !this.flag;
+					if(this.flag) {
+						this.val = '显示';
+					} else {
+						this.val = '隐藏';
+					}
+				}
+			},
+			transitions: { //自定义所有动画名称
+				bounce: {
+					enterClass: 'zoomInLeft',
+					leaveClass: 'zoomOutRight'
+				}
+			}
+		}).$mount('#ele')
+	</script>
+
+</html>

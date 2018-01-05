@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>2.0新特性之模版</title>
+		<script src="../../js/vue2.0.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="ele">
+			<parent></parent>
+		</div>
+		<template id="parent">
+			<div>
+				<h3>{{p_name}}</h3>
+				<h3>{{c_data}}</h3>
+				<hr />
+				<child @child-send="get" :p_data.sync="p_name">
+					默认的slot<br>
+					<i slot="one-slot">自定义的slot</i>
+				</child>
+			</div>
+		</template>
+		<template id="child">
+			<div>
+				<button @click="send()">send</button>
+				<button @click="change()">change</button>
+				<h4>{{c_name}}</h4>
+				<h3>{{cc_data}}</h3>
+				<slot></slot>
+				<slot name="one-slot"></slot>
+			</div>
+		</template>
+	</body>
+	<script type="text/javascript">
+		var vue = new Vue({
+			el: '#ele',
+			data: {
+
+			},
+			components: {
+				parent: {
+					template: '#parent',
+					data() {
+						return {
+							p_name: '父级组件',
+							c_data: null
+						}
+					},
+					methods: {
+						get(data) {
+							this.c_data = data;
+						}
+					},
+					components: {
+						child: {
+							template: '#child',
+							data() {
+								return {
+									c_name: '子级组件', //通过cc_data 作为中间变量来显示父级传递的数据
+									//现在，不允许直接给父级的数据，做赋值操作
+									cc_data: null
+								}
+							},
+							mounted() {
+								this.cc_data = this.p_data;
+							},
+							props: ['p_data'],
+							methods: {
+								send() {
+									this.$emit('child-send', this.c_name);
+								},
+								change() {
+									this.cc_data = 'cc_data is changed';
+								}
+							}
+						}
+					}
+				}
+			}
+		})
+	</script>
+
+</html>

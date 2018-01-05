@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>组件通信</title>
+		<script src="../../js/vue2.0.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="ele">
+			<me>me</me>
+			<hr />
+			<other>other</other>
+		</div>
+		<template id="me">
+			<div>
+				<slot></slot>
+				<button @click="send()">把数据给other</button>
+				<hr />
+				<child :p_data="m_data"></child>
+			</div>
+		</template>
+		<template id="other">
+			<div>
+				<slot></slot>
+				<h3>{{o_data}}</h3>
+			</div>
+		</template>
+	</body>
+	<script type="text/javascript">
+		var Event = new Vue();
+		//vue2.0定义组件
+		var me = {
+			template: '#me',
+			data() {
+				return {
+					m_data: 'this is my data'
+				}
+			},
+			methods: {
+				send() {
+					Event.$emit('emit-data', this.m_data);
+				}
+			}
+		}
+		var other = {
+			template: '#other',
+			data() {
+				return {
+					o_data: 'this is other'
+				}
+			},
+			methods: {
+
+			},
+			mounted() {
+				Event.$on('emit-data', function(data) {
+					this.o_data = data
+				}.bind(this));
+			}
+		}
+		window.onload = () => {
+			new Vue({
+				el: '#ele',
+				components: {
+					me: me,
+					other: other
+				}
+			})
+		}
+	</script>
+
+</html>

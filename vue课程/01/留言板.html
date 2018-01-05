@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>留言板</title>
+		<link rel="stylesheet" href="../../layui/css/layui.css" />
+		<script type="text/javascript" src="../../layui/layui.all.js"></script>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style type="text/css">
+		.form-container {
+			padding: 50px;
+		}
+		
+		.title {
+			font-size: 30px;
+			text-align: center;
+			padding: 20px 0;
+			color: #F0F9F2;
+			text-shadow: 0 0 5px #F2DEDE;
+		}
+		
+		textarea {
+			resize: none!important;
+		}
+	</style>
+
+	<body>
+		<section id="ele" class="layui-container">
+			<div class="layui-row title layui-bg-black">
+				留言板
+			</div>
+			<div id="layui-row" class="form-container layui-bg-black">
+				<form class="layui-form">
+					<div class="layui-form-item" action>
+						<label class="layui-form-label">姓名：</label>
+						<div class="layui-input-block">
+							<input v-model="nickname" type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item layui-form-text">
+						<label class="layui-form-label">留言：</label>
+						<div class="layui-input-block">
+							<textarea v-model="msg" name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button class="layui-btn layui-btn-normal" @click.prevent="leaving()">添加</button>
+							<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="layui-row">
+				<table class="layui-table" style="text-align: center;">
+					<caption style="font-size: 24px;text-shadow: 0 0 3px gray;">留言表</caption>
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>昵称</th>
+							<th>日期</th>
+							<th>留言</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="item in messages" :key="$index">
+							<td>{{$index+1}}</td>
+							<td>{{item.nickname}}</td>
+							<td>{{item.time}}</td>
+							<td>{{item.msg}}</td>
+							<td><button class="layui-btn layui-btn-xs">删除</button></td>
+						</tr>
+					</tbody>
+				</table>
+				<p style="text-align: center;color:#009F95;font-size: 30px;" v-show="{{messages.length==0}}">暂无数据</p>
+			</div>
+		</section>
+	</body>
+	<script type="text/javascript">
+		var myfn = (function() {
+			return {
+				getCurrentTime: function() {
+					var date = new Date();
+					var year = date.getFullYear();
+					var month = date.getMonth();
+					var day = date.getDate();
+					var hours = date.getHours()
+					var minutes = date.getMinutes();
+					return year + '年' + month + '月' + day + '日 ' + hours + '时' + minutes + '分'
+				}
+			}
+		})();
+		String.prototype.trim = function() {
+			return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+		}
+		var vue = new Vue({
+			el: '#ele',
+			data: {
+				messages: [],
+				nickname: '',
+				msg: ''
+			},
+			methods: {
+				leaving: function() {
+					this.nickname = this.nickname.trim();
+					this.msg = this.msg.trim();
+					if((!this.nickname) || (!this.msg)) {
+						layer.alert('请把表单填写完整', {
+							icon: 5
+						});
+					} else {
+						var obj = {
+							nickname: this.nickname,
+							time: myfn.getCurrentTime(),
+							msg: this.msg
+						}
+						this.messages.push(obj);
+					}
+					this.nickname = '';
+					this.msg = '';
+				}
+			}
+		});
+	</script>
+
+</html>

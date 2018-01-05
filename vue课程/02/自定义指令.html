@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>自定义指令</title>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style type="text/css">
+		zns-red {
+			width: 100px;
+			height: 100px;
+			background: olive;
+			display: block;
+		}
+	</style>
+
+	<body>
+		<div id="ele" v-divstyle v-drag>
+			<zns-red></zns-red>
+		</div>
+	</body>
+	<script type="text/javascript">
+		Vue.directive('divstyle', function() {
+			this.el.style.position = 'absolute';
+			this.el.style.width = '200px';
+			this.el.style.height = '200px';
+			this.el.style.background = 'palegreen'
+			this.el.style.border = '2px solid #000';
+		})
+		//自定义指定拖拽指令
+		Vue.directive('drag', function() {
+			var ele = this.el;
+			ele.onmousedown = function(e) {
+				var disX = e.clientX - ele.offsetLeft;
+				var disY = e.clientY - ele.offsetTop;
+				document.onmousemove = function(e) {
+					var l = e.clientX - disX;
+					var t = e.clientY - disY;
+					ele.style.left = l + 'px';
+					ele.style.top = t + 'px';
+				}
+				document.onmouseup = function() {
+					document.onmousemove = null;
+					document.onmouseup = null;
+				}
+			}
+		});
+		//		自定义元素指令
+		Vue.elementDirective('zns-red', {
+			bind: function() {
+				this.el.style.boxShadow = '2px 2px 2px orchid';
+			}
+		})
+		var vue = new Vue({
+			el: '#ele',
+			data: {
+
+			}
+		});
+	</script>
+
+</html>

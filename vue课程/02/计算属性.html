@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>计算属性</title>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="ele">
+			<p>a = {{a}}</p>
+			<p>b = {{b}}</p>
+			<p>c = {{c}}</p>
+			<p>d = {{d}}</p>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#ele',
+			data: {
+				a: 1
+			},
+			computed: { //计算属性
+				b: function() { //返回的数据名就是方法名
+					//业务逻辑代码
+					return 2;
+				},
+				c: function() {
+					return this.a + 2;
+				},
+				d: {
+					get: function() {
+						return this.a + 5;
+					},
+					set: function(val) {
+						this.a = val;
+					}
+				}
+			}
+		});
+		console.log(vm.a);
+		document.onclick = function() {
+			vm.a += 2;
+		}
+	</script>
+
+</html>

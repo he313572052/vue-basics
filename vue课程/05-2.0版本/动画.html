@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>animate</title>
+		<link rel="stylesheet" type="text/css" href="../../css/animate.css" />
+		<script src="../../js/vue2.0.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style type="text/css">
+		.circle,
+		.squre {
+			width: 150px;
+			height: 150px;
+			border-radius: 50%;
+			background: #C12E2A;
+			overflow: hidden;
+			text-align: center;
+			text-shadow: 2px 2px 2px #C4E3F3;
+			color: #fff;
+			padding: 20px;
+			box-sizing: border-box;
+		}
+		
+		.squre {
+			width: 100px;
+			height: 100px;
+			background: #D58512;
+		}
+	</style>
+
+	<body>
+		<div id="ele">
+			<button @click="showOrHidden()">{{but_val}}</button>
+			<transition enter-active-class="animated rollIn" leave-active-class="animated zoomOutRight">
+				<div class="circle" v-show="flag">I AM COMING</div>
+			</transition>
+			<input type="" name="" id="" value="" v-model="show" /><br>
+			<transition-group enter-active-class="animated rollIn" leave-active-class="animated zoomOutRight">
+				<div class="squre" v-show="show" v-for="(item,index) in list" :key="index">{{item}}</div>
+			</transition-group>
+		</div>
+	</body>
+	<script type="text/javascript">
+		window.onload = function() {
+			var vm = new Vue({
+				data: {
+					flag: true,
+					but_val: '显示',
+					show: '',
+					list: ['JACK', 'ROSE', 'MARK', 'TOM']
+				},
+				methods: {
+					showOrHidden() {
+						if(this.flag) {
+							this.flag = false;
+							this.but_val = '隐藏'
+						} else {
+							this.flag = true;
+							this.but_val = '显示';
+						}
+					}
+				},
+				computed: {
+					lists: function() {
+						var arr = [];
+						this.list.forEach(function(val) {
+							if(val.indexOf(this.show) != -1) {
+								arr.push(val);
+							}
+						}.bind(this));
+						return arr;
+					}
+				}
+
+			}).$mount('#ele');
+		}
+	</script>
+
+</html>

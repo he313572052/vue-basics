@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>数据交互</title>
+		<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
+		<script src="../layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/vue-resource.js"></script>
+	</head>
+
+	<body>
+		<div id="box">
+			<input type="button" name="" id="" value="按钮" @click="getData()" />
+
+		</div>
+	</body>
+	<script type="text/javascript">
+		window.onload = function() {
+			var vue = new Vue({
+				el: '#box',
+				data: {
+					list: []
+				},
+				methods: {
+					getData: function() {
+						//如果Web服务器无法处理编码为application/json的请求，你可以启用emulateJSON选项。
+						this.$http.get('../json/books.json', {
+							emulateJSON: true
+						}).then(function(res) {
+							this.list = res.data;
+						});
+					}
+				},
+				mounted: function() {
+					this.$nextTick(function() {
+						console.log("ssss");
+					})
+				}
+			});
+		}
+	</script>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>生命周期</title>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="ele">
+			{{msg | uppercase}}
+		</div>
+	</body>
+	<script type="text/javascript">
+		window.onload = function() {
+			var vue = new Vue({
+				el: '#ele',
+				data: {
+					msg: 'life cycle '
+				},
+				created: function() {
+
+					alert('实例已经创建！ vue=' + this + 'msg=' + this.msg);
+				},
+				beforeCompile: function() {
+					alert('编译之前!  vue=' + this + 'msg=' + this.msg);
+				},
+				compiled: function() {
+					alert('编译之后!  vue=' + this + 'msg=' + this.msg);
+				},
+				ready: function() {
+					alert('数据插入文档中！vue=' + this + 'msg=' + this.msg);
+				},
+				beforeDestroy: function() {
+					alert('实例销毁之前！vue=' + this + 'msg=' + this.msg);
+				},
+				destroyed: function() {
+					alert('实例销毁之后！vue=' + this + 'msg=' + this.msg);
+				}
+			})
+			document.onclick=function(){
+				//销毁实例
+				vue.$destroy();
+			}
+		}
+	</script>
+
+</html>

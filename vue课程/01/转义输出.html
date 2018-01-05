@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>转义输出</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+	</head>
+	<body>
+		<div id="ele">
+			<p><input type="text" name="" id="" value="" v-model="msg" /></p>
+			<!--数据会变化-->
+			<p>{{msg}}</p>
+			<!--数据只绑定一次-->
+			<p>{{*msg}}</p>
+			<!--HTML转意输出-->
+			<p>{{{msg}}}</p>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var vue = new Vue({
+			el:'#ele',
+			data:{
+				msg:'<span>welcome to china</span>'
+			},
+			methods:{
+				
+			}
+		});
+	</script>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>过滤器</title>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	
+	<body>
+		<div id="ele">
+			<!--延迟-->
+			<input type="text" name="" id="" value="" v-model="money" @keyup="show | debounce 2000" />
+			<ul>
+				<!--只显示j开头的-->
+				<li v-for="name in arr | filterBy 'j'">{{$index}} {{name}}</li>
+			</ul>
+			<hr />
+			<ul>
+				<!--排序-->
+				<li v-for="name in arr | orderby 'j'">{{$index}} {{name}}</li>
+			</ul>
+			<hr />
+			<ul>
+				<!--只显示2个-->
+				<li v-for="score in scores | limitBy 2">{{score}}</li>
+			</ul>
+			<hr />
+			<ul>
+				<!--只显示scores长度-2个-->
+				<li v-for="score in scores | limitBy scores.length-2">{{score}}</li>
+			</ul>
+			<hr />
+			<ul>
+				<!--1为升序   -1为降序-->
+				<li v-for="score in scores | orderBy -1">{{score}}</li>
+			</ul>
+			<p> {{msg | reverse}}</p>
+			<hr />
+			<input type="text" name="" id="" value="" v-model="message | twoway"/>
+			<p>{{message | twoway}}</p>
+		</div>
+	</body>
+	<script type="text/javascript">
+		Vue.filter('reverse', function(val) {
+			return val.split('').reverse().join('');
+		})
+		//自定义双向过滤器
+		Vue.filter('twoway', {
+			read: function(input) {
+				return input.toUpperCase();
+			},
+			write: function(val) {
+				return val.split('').reverse().join('');
+			}
+		})
+		var vue = new Vue({
+			data: {
+				money: 0,
+				arr: ['jack', 'rose', 'mark', 'tom', 'java'],
+				scores: [65, 78, 56, 85, 65],
+				msg: 'defaultStatus',
+				message: ''
+			},
+			methods: {
+				show: function() {
+					alert(this.money);
+				}
+			}
+		}).$mount('#ele')
+	</script>
+
+</html>

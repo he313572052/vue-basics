@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../bootstarp/css/bootstrap-theme.min.css" />
+		<link rel="stylesheet" href="../bootstarp/css/bootstrap.min.css" />
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<style type="text/css">
+		[v-cloak] {
+			display: none
+		}
+	</style>
+
+	<body>
+		<div class="container">
+			<div class="col-md-6 col-md-offset-3">
+				<h1>Vue demo</h1>
+				<div id="app0">{{message}}
+					<input type="text" name="" id="" value="" v-model="message" /><br /><br />
+					<select class="form-control" name="" v-model="selected">
+						<option selected value="java">java</option>
+						<option value="C++">C++</option>F
+						<option value="C#">C#</option>
+					</select>
+					<span>{{selected}}</span><br>
+					<button v-on:click="say" class="btn btn-default" type="button">按钮</button>
+					<br />
+					<br />
+				</div>
+			</div>
+			<div class="col-md-8 col-md-offset-2" id="app1">
+				<table class="table table-hover">
+					<caption style="font-size: 18px;font-weight: bold;">世界名著</caption>
+					<tr>
+						<th>编号</th>
+						<th>作者</th>
+						<th>书名</th>
+						<th>价格</th>
+						<th>操作</th>
+					</tr>
+					<tr v-for="book in books">
+						<td>{{book.id}}</td>
+						<td>{{book.author}}</td>
+						<td>{{book.name}}</td>
+						<td>{{book.price}}</td>
+						<td class="text-right" v-if="book.id%2==0">
+							<button type="button" class="btn btn-success" @click="delBook(book)">删除</button>
+						</td>
+
+						<td class="text-right" v-else>
+							<button type="button" class="btn btn-danger" @click="delBook(book)">删除</button>
+						</td>
+
+						<td>
+					</tr>
+				</table>
+				<fieldset class="col-md-12" id="add-book">
+					<legend>添加书籍</legend>
+					<div class="form-group">
+						<label for="">书名</label>
+						<input type="text" class="form-control" v-model="book.name">
+					</div>
+					<div class="form-group">
+						<label for="">作者</label>
+						<input type="text" class="form-control" v-model="book.author">
+					</div>
+					<div class="form-group">
+						<label for="">价格</label>
+						<input type="text" class="form-control" v-model="book.price">
+					</div>
+					<button class="btn btn-primary btn-block" v-on:click="addBook">添加</button>
+					<button class="btn btn-primary btn-block" v-on:click="addBook">升序</button>
+					<button class="btn btn-primary btn-block" v-on:click="addBook">降序</button>
+				</fieldset>
+				<h3>{{letter | resverse | uppercase}}</h3>
+			</div>
+		</div>
+
+	</body>
+	<script type="text/javascript">
+		//		自定义过滤器
+		Vue.filter('resverse', function(value) {
+			return value.split('').reverse().join('');
+		})
+		Vue.filter('uppercase', function(value) {
+			return value.toUpperCase()
+		})
+		var app0 = new Vue({
+			el: '#app0',
+			data: {
+				message: '你好世界',
+				selected: 'java'
+			},
+			methods: {
+				say: function() {
+					alert('你好世界')
+				},
+			}
+		})
+		var app1 = new Vue({
+			el: '#app1',
+			ready: function() {
+				console.log('ready!')
+				this.$http.get('books.json', function(data) {
+					this.$set('books', data);
+				}).error(function(data, status, request) {
+					console.log('失败' + status + "," + request);
+				})
+			},
+			data: {
+				books: [],
+				book: {},
+				letter: 'abcdefghijk'
+			},
+			methods: {
+				addBook: function() {
+					this.book.id = this.books.length + 1;
+					this.books.push(this.book);
+					this.book = {};
+				},
+				delBook: function(book) {
+					var index = this.books.indexOf(book);
+					this.books.splice(index, 1);
+
+				}
+			}
+		})
+	</script>
+
+</html>

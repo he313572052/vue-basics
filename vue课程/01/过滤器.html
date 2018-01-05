@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>过滤器</title>
+		<script src="../js/vue.js"></script>
+	</head>
+
+	<body>
+		<div id="box">
+			<p style="color:royalblue;font-size: 20px;">{{msg | uppercase}}</p>
+			<!--多个过滤器组合-->
+			<p style="color:darkgoldenrod;font-size: 20px;">{{msg | lowercase |capitalize}}</p>
+			<!--直接对飞绑定数据使用过滤器-->
+			<p style="color:darkseagreen;font-size: 20px;">currency输出货币表示第一个参数表示货币符号(默认为$),第二个参数是要保留的小数位数(默认为两位){{52| currency '￥'}}</p>
+			<div class="item">
+				<p>
+					<strong>pluralize如果只有一个参数，复数形式只是简单地在末尾添加一个 “s”。如果有多个参数，参数被当作一个字符串数组，对应一个、两个、三个…复数词。
+            如果值的个数多于参数的个数，多出的使用最后一个参数</strong>
+				</p>
+				<ul v-for="item in num">
+					<li>
+						{{ item }}{{ item | pluralize 'st' 'nd' 'rd' 'th' }}
+					</li>
+				</ul>
+			</div>
+			<div class="item">
+				<p>
+					<strong>debounce包装处理器,让它延迟执行x秒,默认延迟300ms:</strong>
+					<button id="btn-fade" @click="fade | debounce 3000">点击3s后alert</button>
+				</p>
+			</div>
+			<p style="color:chartreuse;font-size: 20px;">{{msg | reverse | lowercase}}</p>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var vue = new Vue({
+			el: '#box',
+			data: {
+				msg: 'Welcom,ShenZhen',
+				num: [1, 2, 3, 4]
+			},
+			methods: {
+				fade: function() {
+					alert('哈哈哈。。。')
+				}
+			},
+			//			自定义过滤器
+			filters: {
+				reverse: function(value) {
+					return value.split('').reverse().join('');
+
+				}
+			}
+		})
+		//		自定义过滤器
+	</script>
+</html>

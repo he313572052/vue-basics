@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>compoent</title>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="ele">
+			<temp></temp>
+			<hr />
+			<tem></tem>
+		</div>
+
+		<div id="ele1">
+			<temp></temp>
+		</div>
+		<template id="temp">
+			<h1>这是一个全局组件</h1>
+			<p>{{cdata}}</p>
+			<!--局部组件只能在当前注册的vue对象内使用-->
+		</template>
+		<template id="tem">
+			<h1>这是局部组件</h1>
+			<p>{{msg}}</p>
+		</template>
+	</body>
+	<script type="text/javascript">
+		var Temp = Vue.extend({
+			template: '#temp',
+			data() {
+				return {
+					cdata: '组件数据'
+				}
+			}
+		});
+		Vue.component('temp', Temp);
+		var vue = new Vue({
+			el: '#ele',
+			data: {
+				msg: 'this is a component'
+			},
+			components: {
+				tem: {
+					template: '#tem'
+				}
+			}
+		})
+		var vm = new Vue({
+			el: '#ele1'
+		})
+	</script>
+
+</html>

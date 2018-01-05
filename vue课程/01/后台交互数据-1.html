@@ -1,0 +1,61 @@
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>后台交互数据</title>
+		<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
+		<script type="text/javascript" src="../js/vue.js"></script>
+		<script src="../js/vue-resource.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style type="text/css">
+		.gray {
+			color: red;
+		}
+	</style>
+
+	<body>
+		<section class="layui-container" id="box">
+			<hr />
+			<input type="text" v-model="t" @keyup="get()" @keydown.down.prevent="changeDown()" @keydown.up.prevent="changeUp()">
+			<ul>
+				<li v-for="value in mydata" :class="{gray:$index==now}">
+					{{value}}
+				</li>
+			</ul>
+			<p v-show="mydata.length==0">暂无数据...</p>
+		</section>
+	</body>
+	<script type="text/javascript">
+		var vue = new Vue({
+			el: '#box',
+			data: {
+				mydata: [],
+				t: '',
+				now: -1
+			},
+			methods: {
+				get: function() {
+					this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su', {
+						wd: this.t
+					}, {
+						jsonp: 'cb'
+					}).then(function(res) {
+						this.mydata = res.data.s;
+
+					});
+				},
+				changeDown: function() {
+					this.now++;
+					if(this.now == this.mydata.length) this.now = -1;
+					this.t = this.mydata[this.now];
+				},
+				changeUp: function() {
+					this.now--;
+					if(this.now == -2) this.now = this.mydata.length - 1;
+				this.t = this.mydata[this.now];
+				}
+			}
+		});
+	</script>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>属性</title>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="ele">
+			<!--数据会出来但是会报404错误-->
+			<!--<img src="{{url}}" alt="" :width="width" :title="title" />-->
+			<img :src="url" alt="" :width="width" :title="title" />
+			<button @click="changeUrl()">切换</button>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var vue = new Vue({
+			el: '#ele',
+			data: {
+				url: 'http://n.sinaimg.cn/auto/transform/w570h380/20171225/PR6A-fypyuva8706986.jpg',
+				width:200,
+				title:'汽车'
+			},
+			methods: {
+				changeUrl: function() {
+					this.url = 'http://n.sinaimg.cn/auto/transform/w570h380/20171225/wAVc-fypyuva8630097.jpg';
+				}
+			}
+		});
+	</script>
+
+</html>

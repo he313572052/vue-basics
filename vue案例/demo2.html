@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<p>{{message}}</p>
+			<input v-model="message" type="" name="" id="" value="" />
+			<ol>
+				<todo-item v-for="item in students" v-bind:todo="item" v-bind:key="item.id"></todo-item>
+			</ol>
+		</div>
+
+	</body>
+	<script type="text/javascript">
+		Vue.component('todo-item', {
+			props: ['todo'],
+			template: '<li>{{todo.name}}<li>'
+		})
+		//双向绑定数据
+		var app = new Vue({
+			el: "#app",
+			data: {
+				message: "春花秋月何时了",
+				students: [{
+					id: 1,
+					name: "jack"
+				}, {
+					id: 2,
+					name: "rosi"
+				}, {
+					id: 3,
+					name: "tom"
+				}]
+			}
+		})
+	</script>
+
+</html>

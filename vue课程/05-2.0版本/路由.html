@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>vue2.0route</title>
+		<link rel="stylesheet" type="text/css" href="../../css/animate.css" />
+		<script src="../../js/vue2.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/vue-router.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style type="text/css">
+		#ele {
+			width: 60%;
+			margin: 0 auto;
+			overflow: hidden;
+		}
+	</style>
+
+	<body>
+		<div id="ele">
+			<input type="button" value="添加一个路由" @click="push">
+			<input type="button" value="替换一个路由" @click="replace">
+			<div>
+				<router-link to="/home">主页</router-link>
+				<router-link to="/news">新闻</router-link>
+			</div>
+			<div>
+				<transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeInUp">
+					<router-view></router-view>
+				</transition>
+			</div>
+		</div>
+
+	</body>
+	<script type="text/javascript">
+		var Home = {
+			template: `<h3>主页</h3>`
+		}
+		var News = {
+			template: `
+					<div>
+						<h3>新闻</h3>
+						<div>
+							<router-link to="/news/car/inner">国内汽车</router-link>
+							<router-link to="/news/car/outer">国外汽车</router-link>
+							<router-link to="/news/phone">手机</router-link>	
+						</div>
+						<div>
+							<transition enter-active-class="animated rollIn" leave-active-class="animated lightSpeedOut">
+								<router-view></router-view>
+							</transition>
+						</div>
+					</div>`,
+		}
+		var Car = {
+			template: `
+					<div>
+						<h3>汽车</h3>
+						<strong>{{$route.params}}汽车</strong>
+					</div>`
+		}
+		var Phone = {
+			template: `
+					<div>
+						<h3>手机</h3>
+					</div>
+					`
+		}
+		const routes = [{
+				path: '/home',
+				component: Home
+			},
+			{
+				path: '/news',
+				component: News,
+				children: [{
+					path: 'car/:area',
+					component: Car
+				}, {
+					path: 'phone',
+					component: Phone
+				}, {
+					path: '*',
+					redirect: '/home' //404
+				}]
+			}
+		]
+		const router = new VueRouter({
+			routes
+		});
+		var vm = new Vue({
+			el: '#ele',
+			router,
+			methods:{
+                push(){
+                    router.push({path:'home'});
+                },
+                replace(){
+                    router.replace({path:'news'});
+                }
+            }
+		})
+	</script>
+
+</html>

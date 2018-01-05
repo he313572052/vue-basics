@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<style type="text/css">
+		.out,
+		.small {
+			width: 100px;
+			height: 100px;
+			background: #C0A16B;
+		}
+		
+		.inner {
+			width: 50px;
+			height: 50px;
+			background: #3C763D;
+			margin: 0 auto;
+		}
+	</style>
+
+	<body>
+		<div id="box">
+			<button @click="showAndHidden()">{{but}}</button>
+			<input type="text" name="" id="" value="" v-model="add_item" />
+			<button @dblclick="add()">添加</button>
+			<div class="small" v-show="show">
+
+			</div>
+			<hr />
+			<div class="out" @click="altOut()">
+				<!--阻止事件冒泡-->
+				<div class="inner" @click.stop="altIne()">
+					
+				</div>
+			</div>
+			<button @keyup.enter="enter1()">回车</button>
+			<input type="text" @keyup.13="enter2()">
+		</div>
+	</body>
+	<script type="text/javascript">
+		String.prototype.trim = function() {
+			return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+		}
+		var vue = new Vue({
+			el: '#box',
+			data: {
+				show: true,
+				but: '显示',
+				list: ['java', 'c#', 'c++', 'c', 'php'],
+				add_item: null
+			},
+			methods: {
+				showAndHidden: function() {
+					if(this.show) {
+						this.show = false;
+						this.but = '隐藏'
+					} else {
+						this.show = true;
+						this.but = '显示';
+					}
+				},
+				add: function() {
+					this.add_item = this.add_item.trim();
+					if(!this.add_item) {
+						alert('请输入添加项');
+						return;
+					}
+					this.list.push(this.add_item);
+					this.add_item = null;
+				},
+				altOut: function() {
+					alert('我是外面的div')
+				},
+				altIne: function() {
+					alert('我是里面的div');
+				},
+				enter1:function(){
+					alert('你按回车键了enter');
+				},
+				enter2:function(){
+					alert('你按了回车13')
+				}
+			}
+		})
+	</script>
+
+</html>

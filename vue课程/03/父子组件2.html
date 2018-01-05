@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>父子组件</title>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="ele">
+			<aaa>
+
+			</aaa>
+		</div>
+		<template id='aaa'>
+			<span>{{childmsg}}</span>
+			<h1>aaa</h1>
+			<bbb :msga="msg" :msgb="mssg"></bbb>
+			<ccc @childdate="get"></ccc>
+		</template>
+		<template id='ccc'>
+			<h1>ccc</h1>
+			<button @click="send">发送数据给父级</button>
+		</template>
+	</body>
+	<script type="text/javascript">
+		'use strict';
+		var vue = new Vue({
+			el: '#ele',
+			data: {
+				a: 'aaa'
+			},
+			components: {
+				aaa: {
+					template: '#aaa',
+					data() {
+						return {
+							childmsg: null,
+							msg: 5671,
+							mssg: '这是父组件的第二数据'
+						}
+					},
+					methods: {
+						get(data) {
+							this.childmsg = data;
+						}
+					},
+					components: {
+						bbb: {
+							//props: ['msga','msgb'], props 也可以是对象  绑定的数据的类型必须一致
+							props: {
+								msga: Number,
+								msgb: String
+							},
+							template: '<p>我是子组件</p><p>第一个数据{{msga}}</p><p>{{msgb}}</p>',
+						},
+						ccc: {
+							template: '#ccc',
+							data() {
+								return {
+									childData: 'this is a data of child'
+								}
+							},
+							methods: {
+								send() {
+									this.$emit('childdate', this.childData);
+								}
+							}
+						}
+					}
+				}
+			}
+		})
+	</script>
+
+</html>

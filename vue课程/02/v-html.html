@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="ele">
+			<!--文本输出-->
+			<p>{{msg}}</p>
+			<!--文本输出-->
+			<p v-text="msg"></p>
+			<!--html转义输出-->
+			<p v-html="msg"></p>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var vue = new Vue({
+			el: '#ele',
+			data: {
+				msg: '<strong>welcome to china</strong>'
+			}
+		});
+	</script>
+
+</html>

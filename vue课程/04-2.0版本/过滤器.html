@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>filter</title>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="ele">
+			<h3>{{ msg | todo}}</h3>
+		</div>
+	</body>
+	<script type="text/javascript">
+		Vue.filter('todo', value => value.split('').reverse().join('').toUpperCase());
+		var vue = new Vue({
+			el: '#ele',
+			data: {
+				msg: 'ashdjdhs'
+			},
+			methods: {
+				getData() {
+
+				}
+			}
+		})
+	</script>
+
+</html>

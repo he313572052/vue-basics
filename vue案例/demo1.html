@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/vue.js"></script>
+	</head>
+
+	<body>
+		<div id='app'>
+			<font v-bind:title="message">
+				鼠标悬停几秒钟查看此处动态绑定的提示信息！
+			</font>
+			<p v-if="send">你现在看到我了</p>
+			<li v-for="item in students">姓名： {{item.name}} 年龄：{{item.age}}</li>
+			<p>{{str}}</p>
+			<button v-on:click="reverseStr">点击处理</button>
+		</div>
+
+	</body>
+	<script type="text/javascript">
+		var app = new Vue({
+			el: "#app",
+			data: {
+				message: "页面加载于" + new Date().toLocaleString(),
+				students: [{
+					name: "jack",
+					age: 18
+				}, {
+					name: "rosi",
+					age: 20
+				}, {
+					name: "tom",
+					age: 25
+				}],
+				str: "jack,rosi,tom"
+			},
+			methods: {
+				reverseStr: function() {
+					this.str = this.str.split(",").reverse().join("-")
+				}
+			}
+		})
+	</script>
+
+</html>
